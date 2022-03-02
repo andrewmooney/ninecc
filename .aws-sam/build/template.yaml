@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: show-finder
+Transform:
+- AWS::Serverless-2016-10-31
+Resources:
+  FilterShowsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/index.handler
+      Runtime: nodejs14.x
+      Architectures:
+      - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A function that takes a JSON array of shows, filters and returns
+        image, slug and title of shows that have 1 or more episodes and drm enabled
+      Events:
+        Http:
+          Type: HttpApi
+          Properties:
+            Path: /
+            Method: POST
+      CodeUri: FilterShowsFunction
+    Metadata:
+      SamResourceId: FilterShowsFunction
